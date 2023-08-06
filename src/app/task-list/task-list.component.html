@@ -1,0 +1,32 @@
+<div class="container">
+    <div class="todo-list">
+
+        <form (ngSubmit)="addItem(taskNgForm)" #taskNgForm="ngForm">
+        <div class="input-group">
+            <input name="date" [matDatepicker]="picker" [(ngModel)]="date" type="text">
+            <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker> </mat-datepicker>
+        </div>
+        <div class="input-group">
+            <input #newTask="ngModel" required name="newTaskTitle" type="text" placeholder="To do" [(ngModel)]="newTaskTitle">
+            <button class="add-button">+</button>
+        </div>
+                    <div *ngIf="newTask.invalid && newTask.touched" class="error-message">New task title is required</div>
+
+        </form>
+        <table>
+            <tr *ngFor="let task of tasks; let i = index" [class.even]="i%2==0" [class.odd]="i%2">
+                <td>
+                    <p [class.is-done]="task.isDone">
+                        {{task.title}}
+                    </p>
+                </td>
+                <td>
+                    <button class="remove-button" (click)="removeItem(task)">X</button>
+                    <button class="done-button" (click)="task.toggleDoneStatus()">{{task.isDone ? 'Undo':
+                        'Done'}}</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
